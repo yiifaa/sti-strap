@@ -83,19 +83,29 @@ export default {
         clearTimeout(this._hide)
         this._hide = null
       }
+    },
+
+    init () {
+      const $el = $(this.$els.dropdown)
+      $el.onBlur((e) => { this.show = false })
+      $el.findChildren('a,button.dropdown-toggle').on('click', e => {
+        e.preventDefault()
+        if (this.disabled) { return false }
+        this.show = !this.show
+        return false
+      })
+      $el.findChildren('ul').on('click', 'li>a', e => { this.show = false })
     }
   },
   ready () {
-    const $el = $(this.$els.dropdown)
-    $el.onBlur((e) => { this.show = false })
-    $el.findChildren('a,button.dropdown-toggle').on('click', e => {
-      e.preventDefault()
-      if (this.disabled) { return false }
-      this.show = !this.show
-      return false
-    })
-    $el.findChildren('ul').on('click', 'li>a', e => { this.show = false })
+    this.init()
   },
+
+  mounted () {
+    this.init()
+  },
+
+
   beforeDestroy () {
     const $el = $(this.$els.dropdown)
     $el.offBlur()

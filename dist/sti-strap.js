@@ -5330,26 +5330,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	        clearTimeout(this._hide);
 	        this._hide = null;
 	      }
+	    },
+	    init: function init() {
+	      var _this2 = this;
+	
+	      var $el = (0, _NodeList2.default)(this.$els.dropdown);
+	      $el.onBlur(function (e) {
+	        _this2.show = false;
+	      });
+	      $el.findChildren('a,button.dropdown-toggle').on('click', function (e) {
+	        e.preventDefault();
+	        if (_this2.disabled) {
+	          return false;
+	        }
+	        _this2.show = !_this2.show;
+	        return false;
+	      });
+	      $el.findChildren('ul').on('click', 'li>a', function (e) {
+	        _this2.show = false;
+	      });
 	    }
 	  },
 	  ready: function ready() {
-	    var _this2 = this;
-	
-	    var $el = (0, _NodeList2.default)(this.$els.dropdown);
-	    $el.onBlur(function (e) {
-	      _this2.show = false;
-	    });
-	    $el.findChildren('a,button.dropdown-toggle').on('click', function (e) {
-	      e.preventDefault();
-	      if (_this2.disabled) {
-	        return false;
-	      }
-	      _this2.show = !_this2.show;
-	      return false;
-	    });
-	    $el.findChildren('ul').on('click', 'li>a', function (e) {
-	      _this2.show = false;
-	    });
+	    this.init();
+	  },
+	  mounted: function mounted() {
+	    this.init();
 	  },
 	  beforeDestroy: function beforeDestroy() {
 	    var $el = (0, _NodeList2.default)(this.$els.dropdown);
@@ -6318,9 +6324,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	
+	  /**
+	   * 是否默认打开对话框
+	   */
+	  mounted: function mounted() {
+	    this.collapse(this.show);
+	  },
 	  ready: function ready() {
 	    this.collapse(this.show);
 	  },
+	
 	
 	  methods: {
 	    collapse: function collapse(val) {
@@ -6359,7 +6372,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      if (this.backdrop) {
 	        (0, _NodeList2.default)(el).on('click', function (e) {
-	          if (e.target === el) _this.show = false;
+	          if (e.target === el) _this.close();
 	        });
 	      }
 	      //
