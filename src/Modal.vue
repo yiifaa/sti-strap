@@ -96,35 +96,62 @@ export default {
   },
   watch: {
     show (val) {
+      this.collapse(val)
+    }
+  },
+
+  /**
+   * 是否默认打开对话框
+   */
+  mounted () {
+     this.collapse(this.show)
+  },
+
+  ready () {
+    this.collapse(this.show)
+  },
+
+  methods: {
+
+    collapse (val) {
+      if (val) {
+        this.open()
+      } else {
+        this.close()
+      }
+    },
+
+    close () {
+      const el = this.$el
+      const body = document.body
+      body.style.paddingRight = null
+      $(body).removeClass('modal-open')
+      $(el).removeClass('in').on('transitionend', () => {
+        $(el).off('click transitionend')
+        el.style.display = 'none'
+      })
+      //
+      this.show = false
+    },
+
+    open () {
       const el = this.$el
       const body = document.body
       const scrollBarWidth = getScrollBarWidth()
-      if (val) {
-        $(el).find('.modal-content').focus()
-        el.style.display = 'block'
-        setTimeout(() => $(el).addClass('in'), 0)
-        $(body).addClass('modal-open')
-        if (scrollBarWidth !== 0) {
-          body.style.paddingRight = scrollBarWidth + 'px'
-        }
-        if (this.backdrop) {
-          $(el).on('click', e => {
-            if (e.target === el) this.show = false
-          })
-        }
-      } else {
-        body.style.paddingRight = null
-        $(body).removeClass('modal-open')
-        $(el).removeClass('in').on('transitionend', () => {
-          $(el).off('click transitionend')
-          el.style.display = 'none'
+      $(el).find('.modal-content').focus()
+      el.style.display = 'block'
+      setTimeout(() => $(el).addClass('in'), 0)
+      $(body).addClass('modal-open')
+      if (scrollBarWidth !== 0) {
+        body.style.paddingRight = scrollBarWidth + 'px'
+      }
+      if (this.backdrop) {
+        $(el).on('click', e => {
+          if (e.target === el) this.close()
         })
       }
-    }
-  },
-  methods: {
-    close () {
-      this.show = false
+      //
+      this.show = true
     }
   }
 }

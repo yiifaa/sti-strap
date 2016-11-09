@@ -26,7 +26,7 @@ import tabset from './Tabset.vue'
 import tooltip from './Tooltip.vue'
 import typeahead from './Typeahead.vue'
 
-const VueStrap = {
+const StiStrap = {
   $,
   accordion,
   affix,
@@ -56,4 +56,4 @@ const VueStrap = {
   typeahead
 }
 
-module.exports = VueStrap
+module.exports = StiStrap

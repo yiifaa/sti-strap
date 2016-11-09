@@ -1,13 +1,13 @@
 {
-  "name": "vue-strap",
+  "name": "sti-strap",
   "version": "1.1.29",
   "description": "Bootstrap components built with Vue.js",
-  "main": "dist/vue-strap.js",
+  "main": "dist/sti-strap.js",
   "repository": {
     "type": "git",
-    "url": "yuche/vue-strap"
+    "url": "yiifaa/sti-strap"
   },
-  "homepage": "http://yuche.github.io/vue-strap/",
+  "homepage": "https://github.com/yiifaa/sti-strap",
   "directories": {
     "src": "src/"
   },
@@ -71,6 +71,6 @@
     "postversion": "git push && git push --tags",
     "gpages": "gh-pages -d build"
   },
-  "author": "yuche",
+  "author": "yiifaa",
   "license": "MIT"
 }
